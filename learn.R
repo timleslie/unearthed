@@ -27,21 +27,23 @@ ctrl <- trainControl(
   verboseIter     = TRUE
 )
 
-elasticTune <- train(LABEL ~ ., data = train_data, 
-                     method = "rf",          
-                     metric = "ROC",
-                     na.action = na.pass,
-                     preProcess = c("center", "scale", "medianImpute", "nzv"),
-                     trControl = ctrl,
-                     tuneLength = 10)        
+modelTune <- train(LABEL ~ ., data = train_data, 
+                   method = "rf",          
+                   metric = "ROC",
+                   na.action = na.pass,
+                   preProcess = c("center", "scale", "medianImpute", "nzv"),
+                   trControl = ctrl,
+                   tuneLength = 10)        
 
 
 
-resultsTest <- predict(elasticTune,test_data, na.action = na.pass, type = "prob")
+resultsTest <- predict(modelTune,test_data, na.action = na.pass, type = "prob")
 resultsTest$obs <- test_data$LABEL
-resultsTest$pred <- predict(elasticTune,test_data, na.action = na.pass)
+resultsTest$pred <- predict(modelTune,test_data, na.action = na.pass)
 
 print(confusionMatrix(resultsTest$pred,resultsTest$obs))
 
-varImp(elasticTune)
+varImp(modelTune)
+
+saveRDS(modelTune, "~/model.rds")
 

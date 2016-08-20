@@ -16,9 +16,10 @@ frame_to_vector <- function(frame_in) {
   return(out_vec)
 }
 
-data_in <- read_csv("/mnt/raw/csvs/all.csv")
+data_in <- read_csv("/mnt/raw/csvs/train.csv")
+#data_in <- read_csv("/mnt/raw/csvs/2016-02.csv")
 
-# Shim to allow joining multiple files together
+# Shim to allow joining multiple files together (no longer required)
 data <- data_in
 
 # Mark the active spew events
@@ -100,3 +101,5 @@ normal_train$LABEL <- "NORMAL"
 training <- rbind(spew_train, normal_train)
 training$LABEL <- as.factor(training$LABEL)
 training <- training[sample(1:nrow(training),nrow(training)),]
+
+
