@@ -50,3 +50,6 @@ scores_for_matt <- data.frame(
   Date = test$Date[anchor_vec],
   Score = scoresFinal$VOMIT
 )
+
+scores_for_matt$Date <- format.Date(scores_for_matt$Date, format="%d/%m/%Y %H:%M:%S")
+write.csv(scores_for_matt, "/mnt/raw/scores_for_matt.csv", row.names = F)
